@@ -42,7 +42,6 @@ docs.getSelectionWithObserver = function (callback, defaultToParagraph, getRaw) 
     utils.observe($(".docs-texteventtarget-iframe").contents().find("[contenteditable=\"true\"]")[0], {
         childList: true
     }, function (mutations) {
-        console.log("Called back!");
         callback(getRaw ? mutations[0].target : $(mutations[0].target).text().trim());
     }, true);
 
