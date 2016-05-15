@@ -1,7 +1,6 @@
 var wordsPerMinute = 120;
-$("body").on("mouseup", ".kix-appview-editor", function (e) {
-    if (e.which !== 1) return;
 
+function refresh() {
     if (docs.hasSelection()) {
         docs.getSelection(function (textEl) {
             var text = "";
@@ -21,4 +20,16 @@ $("body").on("mouseup", ".kix-appview-editor", function (e) {
     } else {
         $("#docs-notice").text("");
     }
+}
+
+$("body").on("mouseup", ".kix-appview-editor", function (e) {
+    if (e.which !== 1) return;
+
+    refresh();
+});
+
+$(".docs-texteventtarget-iframe").contents().find("[contenteditable=\"true\"]").keydown(function (e) {
+    if (e.keyCode !== 65 || e.ctrlKey != true) return;
+
+    setTimeout(refresh, 100);
 });
