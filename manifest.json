@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.google.com/*document/d/*/edit*"],
-      "js": ["jquery.min.js", "moment.js", "utils.js", "docs.js", "speechless.js"]
+      "js": ["jquery.min.js", "utils.js", "docs.js", "speechless.js"]
     }
   ]
 }

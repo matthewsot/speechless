@@ -12,10 +12,16 @@ function refresh() {
 
             var words = text.split(' ').length;
             var minutes = words / wordsPerMinute;
+            var seconds = Math.round((minutes - Math.floor(minutes)) * 60);
+            if (seconds.toString().length === 1) {
+                seconds = "0" + seconds.toString();
+            } else if (seconds.toString().length === 0) {
+                seconds = "00";
+            }
 
-            var time = moment().add(minutes, "minutes").fromNow();
+            var time = Math.floor(minutes) + ":" + seconds;
 
-            $("#docs-notice").text(words + " words, " + time + "");
+            $("#docs-notice").text(words + " words, " + time);
         }, true, true);
     } else {
         $("#docs-notice").text("");
@@ -24,12 +30,10 @@ function refresh() {
 
 $("body").on("mouseup", ".kix-appview-editor", function (e) {
     if (e.which !== 1) return;
-
     refresh();
 });
 
 $(".docs-texteventtarget-iframe").contents().find("[contenteditable=\"true\"]").keydown(function (e) {
     if (e.keyCode !== 65 || e.ctrlKey != true) return;
-
     setTimeout(refresh, 100);
 });
