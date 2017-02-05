@@ -1,8 +1,9 @@
-var docs = {
+var docs = docs || { //TODO: cleanup the duplication here + in utils.js
     id: window.location.href.split("/document/d/")[1].split("/")[0],
     get name() {
         return $(".docs-title-input-label-inner").text().trim();
-    }
+    },
+    platform: "chrome" //chrome, firefox, userscript
 };
 
 docs.getSelectionEl = function () {
@@ -41,7 +42,7 @@ docs.getSelectionWithObserver = function (callback, defaultToParagraph, getRaw) 
 
     utils.observe($(".docs-texteventtarget-iframe").contents().find("[contenteditable=\"true\"]")[0], {
         childList: true
-    }, function (mutations) {
+    }, function(mutations) {
         callback(getRaw ? mutations[0].target : $(mutations[0].target).text().trim());
     }, true);
 
@@ -89,14 +90,14 @@ docs.insertText = function (toInsert) {
         }
     }
     
-    if (actionPluginPlatform !== "userscript") {
+    if (docs.platform !== "userscript") {
         docs.runWithCreateKeyboard(doInsertText.toString(), "doInsertText", "\"" + toInsert + "\"");
     } else {
         doInsertText(toInsert);
     }
 };
 
-var lastBackspace = Date.now();
+docs.lastBackspace = Date.now();
 docs.backspace = function (counts) {
     function doBackspace(counts) {
         var keyboardType = "keypress";
@@ -122,7 +123,7 @@ docs.backspace = function (counts) {
     
     if (typeof counts === "undefined") counts = 1;
 
-    var secondsSinceLastBackspace = (Date.now() - lastBackspace) / 1000;
+    var secondsSinceLastBackspace = (Date.now() - docs.lastBackspace) / 1000;
 
     if (counts === 1 && secondsSinceLastBackspace < 1) return; //just trust me here
 
@@ -202,7 +203,7 @@ docs.toggleSubscript = function () {
         el.dispatchEvent(ctrlPress);
     }
     
-    if (actionPluginPlatform !== "userscript") {
+    if (docs.platform !== "userscript") {
         docs.runWithCreateKeyboard(_doToggleSubscript.toString(), "_doToggleSubscript", "");
         return;
     } else {
