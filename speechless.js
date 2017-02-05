@@ -34,6 +34,6 @@ $("body").on("mouseup", ".kix-appview-editor", function (e) {
 });
 
 $(".docs-texteventtarget-iframe").contents().find("[contenteditable=\"true\"]").keydown(function (e) {
-    if (e.keyCode !== 65 || e.ctrlKey != true) return;
+    if ((e.keyCode !== 65 || e.ctrlKey != true) && e.shiftKey != true) return;
     setTimeout(refresh, 100);
 });
