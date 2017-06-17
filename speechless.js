@@ -28,6 +28,7 @@ function refresh() {
     }
 }
 
+//Refresh the time-to-speak whenever the user makes a selection or types something
 $("body").on("mouseup", ".kix-appview-editor", function (e) {
     if (e.which !== 1) return;
     refresh();

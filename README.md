@@ -1,4 +1,4 @@
 # speechless
-A time-to-speak counter for Google Docs
+A time-to-speak counter for Google Docs.
 
-Based on [Docs+](https://github.com/matthewsot/docs-plus)
+This repository is a simple demo for [Docs+](https://github.com/matthewsot/docs-plus), which allows browser extensions to directly interact with the Google Docs Kix editor.
